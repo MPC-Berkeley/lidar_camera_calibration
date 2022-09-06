@@ -48,14 +48,26 @@
     <param name="camera_info_topic" type="str" value="$(arg camera)/camera_info" />
     <param name="image_color_topic" type="str" value="$(arg camera)/image_rect" />
     <param name="velodyne_points_topic" type="str" value="/os_cloud_node/points" />
-    <param name="camera_lidar_topic" type="str" value="$(arg camera)/camera_lidar" />
-    <param name="project_mode" type="bool" value="true" />
+    <param name="bounding_boxes_topic" type="str" value="/darknet_ros/bounding_boxes" />
+    <param name="found_object_topic" type="str" value="/darknet_ros/found_object" />
+    <!-- for velodyne pointcloud : /kitti/velo/pointcloud  and ours : /os_cloud_node/points -->
 
+    <param name="camera_lidar_topic" type="str" value="$(arg camera)/camera_lidar" />
+    <param name="obstacle_info_topic" type="str" value="/obstacle_info" />
+    <param name="project_mode" type="bool" value="false" />
+	
     <!-- Run Camera-LiDAR projection script -->
     <node   
         pkg="lidar_camera_calibration"
         type="calibrate_camera_lidar.py"
         name="calibrate_camera_lidar"
+        output="screen" />
+
+    <!-- Run display-obstacles script -->
+    <node   
+        pkg="lidar_camera_calibration"
+        type="display_obstacles.py"
+        name="display_obstacles"
         output="screen" />
 
     <!-- Run image view to display the projected points image -->
